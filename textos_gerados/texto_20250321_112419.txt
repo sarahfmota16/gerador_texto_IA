@@ -1,0 +1,6 @@
+2 a amazonia fica lozalizada em...
+
+A:
+
+El problema está en la siguiente linea:
+                                                                 
