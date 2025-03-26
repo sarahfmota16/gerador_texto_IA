@@ -5,7 +5,6 @@ import os
 import datetime
 import logging
 
-# Configuração do logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 DIR_TEXTOS = "textos_gerados"
@@ -16,7 +15,6 @@ app = FastAPI()
 class PromptRequest(BaseModel):
     prompt: str
 
-# Modelo otimizado
 generator = pipeline("text-generation", model="microsoft/phi-2", eos_token_id=50256) 
 
 @app.post("/gerar_texto/")
@@ -33,7 +31,6 @@ def gerar_e_armazenar_texto(request: PromptRequest):
             num_beams=1 
         )[0]["generated_text"]
 
-        # Processamento da resposta gerada
         texto_gerado = texto_gerado.split("Assistente:")[-1].strip()
 
         def remover_repeticoes(texto):
@@ -45,8 +42,7 @@ def gerar_e_armazenar_texto(request: PromptRequest):
             return ". ".join(resultado)
 
         texto_gerado = remover_repeticoes(texto_gerado)
-
-        # Salvar resposta
+        
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         nome_arquivo = f"{DIR_TEXTOS}/texto_{timestamp}.txt"
 
