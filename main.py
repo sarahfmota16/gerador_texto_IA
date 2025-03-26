@@ -8,7 +8,7 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 DIR_TEXTOS = "textos_gerados"
-os.makedirs(DIR_TEXTOS, exist_ok=True)
+os.makedirs(DIR_TEXTOS, exist_ok=True)   
 
 app = FastAPI()
 
@@ -30,8 +30,6 @@ def gerar_e_armazenar_texto(request: PromptRequest):
             num_return_sequences=1,
             num_beams=1 
         )[0]["generated_text"]
-
-        texto_gerado = texto_gerado.split("Assistente:")[-1].strip()
 
         def remover_repeticoes(texto):
             frases = texto.split(". ")
@@ -56,4 +54,3 @@ def gerar_e_armazenar_texto(request: PromptRequest):
     except Exception as e:
         logging.error(f"Erro ao gerar texto: {str(e)}")
         raise HTTPException(status_code=500, detail="Erro interno ao processar a requisição")
-
